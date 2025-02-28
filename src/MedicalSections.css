@@ -1,0 +1,46 @@
+.containersererere {
+    padding: 16px;
+  }
+  
+  .section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 8px;
+  }
+  
+  .section-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .icon {
+    font-size: 20px;
+    margin-right: 8px;
+  }
+  
+  .name {
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+  }
+  
+  .add-btn {
+    display: flex;
+    align-items: center;
+    color: #007bff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .add-btn svg {
+    margin-right: 4px;
+  }
+  
