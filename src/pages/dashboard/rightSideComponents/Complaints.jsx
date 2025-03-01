@@ -21,94 +21,79 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Save, LayersClear } from '@mui/icons-material';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-export default function SymptomsTable() {
-  const [symptomsList, setSymptomsList] = useState(['Fever', 'Cough', 'Cold', 'Headache', 'Body Pain']);
-  const [selectedSymptoms, setSelectedSymptoms] = useState([]);
+export default function Complaints() {
+  const [diagnosisList, setDiagnosisList] = useState(['Diabetes', 'Hypertension', 'Asthma', 'Migraine', 'Arthritis']);
+  const [selectedDiagnosis, setSelectedDiagnosis] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [anchorEl, setAnchorEl] = useState(null);
 
   const severityOptions = ['Mild', 'Moderate', 'Severe'];
 
-  //========= Open dropdown
   const handleOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  //========= Close dropdown
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  //============ Select symptom
-  const handleSymptomSelect = (symptom) => {
-    if (!selectedSymptoms.some((s) => s.name === symptom)) {
-      setSelectedSymptoms([...selectedSymptoms, { id: Date.now(), name: symptom }]);
+  const handleDiagnosisSelect = (diagnosis) => {
+    if (!selectedDiagnosis.some((d) => d.name === diagnosis)) {
+      setSelectedDiagnosis([...selectedDiagnosis, { id: Date.now(), name: diagnosis }]);
     }
     setSearchTerm('');
     handleClose();
   };
 
-  //======= Delete symptom
   const handleDelete = (id) => {
-    setSelectedSymptoms(selectedSymptoms.filter((symptom) => symptom.id !== id));
+    setSelectedDiagnosis(selectedDiagnosis.filter((diagnosis) => diagnosis.id !== id));
   };
 
-  //=========== Search input change
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  //=========== Add custom symptom
-  const handleAddCustomSymptom = () => {
-    if (searchTerm.trim() && !symptomsList.includes(searchTerm)) {
-      setSymptomsList([...symptomsList, searchTerm]);
-      setSelectedSymptoms([...selectedSymptoms, { id: Date.now(), name: searchTerm }]);
+  const handleAddCustomDiagnosis = () => {
+    if (searchTerm.trim() && !diagnosisList.includes(searchTerm)) {
+      setDiagnosisList([...diagnosisList, searchTerm]);
+      setSelectedDiagnosis([...selectedDiagnosis, { id: Date.now(), name: searchTerm }]);
     }
     setSearchTerm('');
     handleClose();
   };
 
-  //============= Function to handle drag & drop
   const handleDragEnd = (result) => {
     if (!result.destination) return;
-    const newList = [...selectedSymptoms];
+    const newList = [...selectedDiagnosis];
     const [movedItem] = newList.splice(result.source.index, 1);
     newList.splice(result.destination.index, 0, movedItem);
 
-    setSelectedSymptoms(newList);
+    setSelectedDiagnosis(newList);
   };
 
-  //================ main return function ===============//
+  //============= amin return function ===============//
   return (
-    <Box sx={{ p: 2, borderRadius: 2, border: '1px solid #ddd', backgroundColor: '#fff', marginTop: "15px" }}>
-      {/*============= Header =============*/}
+    <Box sx={{ p: 2, borderRadius: 2, border: '1px solid #ddd', backgroundColor: '#fff' }}>
       <Box display="flex" alignItems="center" justifyContent="space-between" mb={2}>
-        <Typography
-          variant="h6"
-          fontWeight="bolder"
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            fontSize: 'large'
-          }}
-        >
+        <Typography variant="h6" fontWeight="bolder" sx={{ display: 'flex', alignItems: 'center', fontSize: 'large' }}>
           <Box
             sx={{
               width: '30px',
               height: '30px',
-              border: '2px dotted purple', 
-              borderRadius: '50%', 
+              border: '2px dotted purple',
+              borderRadius: '50%',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               marginRight: '8px'
             }}
           >
-            🟣
+            <LocalHospitalIcon sx={{ color: 'purple', fontSize: '20px' }} />
           </Box>
-          Symptoms
+          Complaints
         </Typography>
         <Box>
           <Button startIcon={<LayersClear />} sx={{ textTransform: 'none', color: '#555' }}>
@@ -122,33 +107,32 @@ export default function SymptomsTable() {
           </Button>
         </Box>
       </Box>
-      {/*============= Header =============*/}
-      {/*============ Table =============*/}
+
       <Box>
-        {selectedSymptoms.length > 0 && (
+        {selectedDiagnosis.length > 0 && (
           <TableContainer component={Paper} sx={{ mt: 2 }}>
             <DragDropContext onDragEnd={handleDragEnd}>
               <Table>
                 <TableHead>
                   <TableRow>
                     <TableCell>☰</TableCell>
-                    <TableCell>Symptom</TableCell>
+                    <TableCell>Diagnosis</TableCell>
                     <TableCell>Since</TableCell>
                     <TableCell>Severity</TableCell>
                     <TableCell>Notes</TableCell>
                     <TableCell>Action</TableCell>
                   </TableRow>
                 </TableHead>
-                <Droppable droppableId="symptoms">
+                <Droppable droppableId="diagnosis">
                   {(provided) => (
                     <TableBody ref={provided.innerRef} {...provided.droppableProps}>
-                      {selectedSymptoms.map((symptom, index) => (
-                        <Draggable key={symptom.id} draggableId={symptom.id.toString()} index={index}>
+                      {selectedDiagnosis.map((diagnosis, index) => (
+                        <Draggable key={diagnosis.id} draggableId={diagnosis.id.toString()} index={index}>
                           {(provided) => (
                             <TableRow ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                               <TableCell>☰</TableCell>
                               <TableCell>
-                                <TextField disabled type="text" variant="outlined" value={symptom.name} size="small" fullWidth />
+                                <TextField disabled type="text" variant="outlined" value={diagnosis.name} size="small" fullWidth />
                               </TableCell>
                               <TableCell>
                                 <TextField type="text" size="small" variant="outlined" fullWidth placeholder="Since" />
@@ -173,7 +157,7 @@ export default function SymptomsTable() {
                                       color: 'red'
                                     }
                                   }}
-                                  onClick={() => setSelectedSymptoms(selectedSymptoms.filter((s) => s.id !== symptom.id))}
+                                  onClick={() => handleDelete(diagnosis.id)}
                                 >
                                   <DeleteIcon />
                                 </IconButton>
@@ -191,23 +175,17 @@ export default function SymptomsTable() {
           </TableContainer>
         )}
       </Box>
-      {/*============ Table =============*/}
-
-      {/*============ Searchable Dropdown =============*/}
       <FormControl fullWidth sx={{ mt: 2 }}>
-        <InputLabel>Search or Add Symptom</InputLabel>
+        <InputLabel>Search or Add Diagnosis</InputLabel>
         <OutlinedInput
           value={searchTerm}
           onChange={handleInputChange}
           onClick={handleOpen}
           placeholder="Search or type to add..."
-          label="Search or Add Symptom"
+          label="Search or Add Diagnosis"
         />
       </FormControl>
-
-      {/*============== Dropdown Menu ================*/}
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose} sx={{ maxHeight: 300 }}>
-        {/*========= Search Input Inside Dropdown =========*/}
         <MenuItem disableRipple>
           <TextField
             autoFocus
@@ -219,19 +197,15 @@ export default function SymptomsTable() {
             size="small"
           />
         </MenuItem>
-
-        {/*============ Filtered Symptoms List ==============*/}
-        {symptomsList
-          .filter((symptom) => symptom.toLowerCase().includes(searchTerm.toLowerCase()))
-          .map((symptom) => (
-            <MenuItem key={symptom} onClick={() => handleSymptomSelect(symptom)}>
-              {symptom}
+        {diagnosisList
+          .filter((diagnosis) => diagnosis.toLowerCase().includes(searchTerm.toLowerCase()))
+          .map((diagnosis) => (
+            <MenuItem key={diagnosis} onClick={() => handleDiagnosisSelect(diagnosis)}>
+              {diagnosis}
             </MenuItem>
           ))}
-
-        {/*=============== Add Custom Option =========*/}
-        {searchTerm && !symptomsList.includes(searchTerm) && (
-          <MenuItem onClick={handleAddCustomSymptom} sx={{ fontWeight: 'bold', color: 'green' }}>
+        {searchTerm && !diagnosisList.includes(searchTerm) && (
+          <MenuItem onClick={handleAddCustomDiagnosis} sx={{ fontWeight: 'bold', color: 'green' }}>
             ➕ Add "{searchTerm}"
           </MenuItem>
         )}

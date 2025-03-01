@@ -17,6 +17,8 @@ import MedicalRecordsForm from './components/MedicalRecordsForm';
 import SymptomsSection from './rightSideComponents/SymptomsSection';
 import Examinations from './rightSideComponents/Examinations';
 import Diagnosis from './rightSideComponents/Diagnosis';
+import Complaints from './rightSideComponents/Complaints';
+import FollowUp from './rightSideComponents/FollowUp';
 
 //======= Map sections to their respective components
 const sectionComponents = {
@@ -80,9 +82,12 @@ export default function DashboardAnalytics() {
       </Grid>
 
       <Grid item xs={12} md={8}>
+        <Complaints />
         <SymptomsSection />
+        <Diagnosis title="Provisional Diagnosis" />
+        <Diagnosis title="Final Diagnosis" />
         <Examinations />
-        <Diagnosis />
+        <FollowUp />
       </Grid>
 
       {/*============= Right Side Offcanvas (Drawer) ================*/}

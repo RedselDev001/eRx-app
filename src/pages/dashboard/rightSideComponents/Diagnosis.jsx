@@ -24,7 +24,7 @@ import { Save, LayersClear } from '@mui/icons-material';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 
-export default function Diagnosis() {
+export default function Diagnosis({ title }) {
   const [diagnosisList, setDiagnosisList] = useState([
     'Diabetes',
     'Hypertension',
@@ -82,6 +82,7 @@ export default function Diagnosis() {
     setSelectedDiagnosis(newList);
   };
 
+  //============ main reut
   return (
     <Box sx={{ p: 2, borderRadius: 2, border: '1px solid #ddd', backgroundColor: '#fff', marginTop: '15px' }}>
       <Box display="flex" alignItems="center" justifyContent="space-between" mb={2}>
@@ -100,7 +101,7 @@ export default function Diagnosis() {
           >
             <LocalHospitalIcon sx={{ color: 'red', fontSize: '20px' }} />
           </Box>
-          Diagnosis
+          {title}
         </Typography>
         <Box>
           <Button startIcon={<LayersClear />} sx={{ textTransform: 'none', color: '#555' }}>
@@ -174,7 +175,7 @@ export default function Diagnosis() {
       )}
 
       <FormControl fullWidth sx={{ mt: 2 }}>
-        <InputLabel>Search or Add Diagnosis</InputLabel>
+        <InputLabel>Search or Add {title}</InputLabel>
         <OutlinedInput
           value={searchTerm}
           onChange={handleInputChange}
