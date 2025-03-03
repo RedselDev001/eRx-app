@@ -19,6 +19,9 @@ import Examinations from './rightSideComponents/Examinations';
 import Diagnosis from './rightSideComponents/Diagnosis';
 import Complaints from './rightSideComponents/Complaints';
 import FollowUp from './rightSideComponents/FollowUp';
+import InvestigationOrder from './rightSideComponents/InvestigationOrder';
+import Advices from './rightSideComponents/Advices';
+import ReferredTo from './rightSideComponents/ReferredTo';
 
 //======= Map sections to their respective components
 const sectionComponents = {
@@ -87,6 +90,9 @@ export default function DashboardAnalytics() {
         <Diagnosis title="Provisional Diagnosis" />
         <Diagnosis title="Final Diagnosis" />
         <Examinations />
+        <InvestigationOrder/>
+        <Advices/>
+        <ReferredTo/>
         <FollowUp />
       </Grid>
 
