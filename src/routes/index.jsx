@@ -9,10 +9,8 @@ import ComponentsRoutes from './ComponentsRoutes';
 import { SimpleLayoutType } from 'config';
 import SimpleLayout from 'layout/Simple';
 import Loadable from 'components/Loadable';
-
+import AuthLayout from 'pages/auth/login';
 // render - landing page
-const PagesLanding = Loadable(lazy(() => import('pages/landing')));
-
 // ==============================|| ROUTING RENDER ||============================== //
 
 const router = createBrowserRouter(
@@ -23,7 +21,7 @@ const router = createBrowserRouter(
       children: [
         {
           index: true,
-          element: <PagesLanding />
+          element: <AuthLayout />
         }
       ]
     },

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 // material-ui
@@ -42,6 +43,15 @@ export default function AuthLogin({ isDemo = false }) {
   const scriptedRef = useScriptRef();
 
   const [showPassword, setShowPassword] = React.useState(false);
+  useEffect(() => {
+    const storedEmail = 'info@codedthemes.com'; // You can replace this with localStorage.getItem('email') if needed
+    const storedPassword = '123456'; // Same as above, store securely
+    if (storedEmail && storedPassword) {
+      login(storedEmail, storedPassword)
+        .then(() => preload('api/menu/dashboard', fetcher)) // Preload dashboard menu
+        .catch((err) => console.error('Auto-login failed:', err));
+    }
+  }, []);
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -49,6 +59,10 @@ export default function AuthLogin({ isDemo = false }) {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
+
+
+  
 
   return (
     <>
@@ -81,7 +95,7 @@ export default function AuthLogin({ isDemo = false }) {
         }}
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
-          <form noValidate onSubmit={handleSubmit}>
+          <form noValidate onSubmit={handleSubmit} style={{display:'none'}}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Stack spacing={1}>
@@ -165,7 +179,7 @@ export default function AuthLogin({ isDemo = false }) {
               )}
               <Grid item xs={12}>
                 <AnimateButton>
-                  <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="primary">
+                  <Button disableElevation disabled={isSubmitting}  fullWidth size="large" type="submit" variant="contained" color="primary">
                     Login
                   </Button>
                 </AnimateButton>
