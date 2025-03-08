@@ -11,8 +11,6 @@ import authReducer from 'contexts/auth-reducer/auth';
 // project import
 import Loader from 'components/Loader';
 import axios from 'utils/axios';
-import {Live} from "../pages/auth/Config";
-
 
 const chance = new Chance();
 
@@ -40,7 +38,6 @@ const setSession = (serviceToken) => {
     axios.defaults.headers.common.Authorization = `Bearer ${serviceToken}`;
   } else {
     localStorage.removeItem('serviceToken');
-    localStorage.removeItem('access_token');
     delete axios.defaults.headers.common.Authorization;
   }
 };
@@ -54,7 +51,6 @@ export const JWTProvider = ({ children }) => {
 
   useEffect(() => {
     const init = async () => {
-    
       try {
         const serviceToken = window.localStorage.getItem('serviceToken');
         if (serviceToken && verifyToken(serviceToken)) {
@@ -126,15 +122,8 @@ export const JWTProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem('access_token');
-    handlLogout()
     setSession(null);
     dispatch({ type: LOGOUT });
-  };
-
-
-  const handlLogout = () => {
-  window.location.href = `${Live.Auth}`;
   };
 
   const resetPassword = async (email) => {
